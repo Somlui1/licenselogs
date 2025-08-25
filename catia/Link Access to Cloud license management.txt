@@ -1,0 +1,16 @@
+AHA license Management:	https://r1132103523417-ap2-licensing-3.3dexperience.3ds.com 
+ AA license Management:	https://r1132103523401-ap2-licensing-3.3dexperience.3ds.com
+
+
+Connect to Cloud License Management
+
+1. Open link from above
+2. Sign in with functional email (**Lock email with company license management**)
+		AHA: aha.dsls@aapico.com
+	 	 AA: aa.dsls@aapico.com
+	   Password: A@pico@2025
+3. Browser are redirected to "License Server Connection Parameters"
+		Administrator Password: A@pico@2025
+	       	       Connection Mode: Full (Read/Write)
+   Customer Authentication Certificate: License file foreach company
+4. Select "Connect"
