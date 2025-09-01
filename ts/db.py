@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, Time, Numeric, DateTime, create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.declarative import declarative_base
-
 Base = declarative_base()
 class NX(Base):
     __tablename__ = "main"

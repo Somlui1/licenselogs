@@ -8,11 +8,13 @@ from faker import Faker
 Base = declarative_base()
 engine = create_engine("postgresql://admin:it%40apico4U@10.10.10.181:5432/license_logsdb")
 schemas = ["autoform", "nx", "catia", "solidworks", "autodesk","testing"]
+
 # สร้าง schema ถ้ายังไม่มี
 with engine.connect() as conn:
     for schema_name in schemas:
         conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema_name}"))
     conn.commit()
+
 # สร้าง table ทั้งหมด
 class TestingUsers(Base):
     __tablename__ = "users"
@@ -37,5 +39,4 @@ with SessionLocal() as db:
     # เพิ่มทั้งหมดในครั้งเดียว
     db.add_all(users)
     db.commit()
-
     print("✅ 100 fake users inserted successfully!")

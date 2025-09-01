@@ -86,6 +86,9 @@ foreach ($line in $lines) {
         }
     }
 }
+
+
+
 $sessions | Format-Table -AutoSize
 $excelPath = "C:\Users\wajeepradit.p\nx2.xlsx"
 $sessions | Export-Excel -Path $excelPath -AutoSize -WorksheetName 'nx' -TableName 'SessionData'
