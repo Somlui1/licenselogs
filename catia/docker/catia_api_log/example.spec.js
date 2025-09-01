@@ -35,12 +35,15 @@ async function saveToMongo(result,db,tb) {
 }
 // ใช้งาน
 import { test, expect } from '@playwright/test';
+const path = require('path');
+const process = require('process');
+process.chdir(__dirname);
 test('AA capture getLogs API call', async ({ page }) => {
   // ✅ สร้าง Promise สำหรับรอ request ที่ action = "getLogs"
 
   const username = 'aa.dsls@aapico.com'
   const password ='A@pico@2025'
-  const licenseFilePath = 'ER1NQ-P0GYZ-981M8-WQVEP-D80QL_0000_1.LIC';
+  const licenseFilePath = 'C:\\Users\\wajeepradit.p\\OneDrive - AAPICO Hitech PCL\\project\\licenselogs\\catia\\docker\\ER1NQ-P0GYZ-981M8-WQVEP-D80QL_0000_1.LIC';
   
   const waitForGetLogsRequest = new Promise((resolve, reject) => {
     page.on('request', async (request) => {
@@ -75,7 +78,7 @@ test('AA capture getLogs API call', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password ' }).click();
   await page.getByText('Log inBack').click();
   await page.getByRole('button', { name: 'Log in' }).click();
-  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
   await page.getByRole('textbox').click();
   await page.getByRole('textbox').fill(password);
   await page.getByRole('button', { name: 'Choose file...' }).click();
@@ -115,13 +118,11 @@ matchedRequest.body.parameters.numberOfRowsToReturn = 999999; // ลบเพื
   await saveToMongo(result,'logs','AA');
 });
 
-
-
 test('AHA capture getLogs API call', async ({ page }) => {
   // ✅ สร้าง Promise สำหรับรอ request ที่ action = "getLogs"
   const username = 'aha.dsls@aapico.com'
   const password ='A@pico@2025'
-  const licenseFilePath  = "EL57E-SAZKY-SL79X-3MBAC-UJPWV_0000_1.LIC";
+  const licenseFilePath  = "C:\\Users\\wajeepradit.p\\OneDrive - AAPICO Hitech PCL\\project\\licenselogs\\catia\\docker\\EL57E-SAZKY-SL79X-3MBAC-UJPWV_0000_1.LIC";
   const waitForGetLogsRequest = new Promise((resolve, reject) => {
     page.on('request', async (request) => {
       if (
@@ -155,7 +156,7 @@ test('AHA capture getLogs API call', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Password ' }).click();
   await page.getByText('Log inBack').click();
   await page.getByRole('button', { name: 'Log in' }).click();
-  await page.waitForTimeout(5000);
+  await page.waitForLoadState('networkidle');
   await page.getByRole('textbox').click();
   await page.getByRole('textbox').fill(password);
   await page.getByRole('button', { name: 'Choose file...' }).click();

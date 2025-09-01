@@ -1,0 +1,98 @@
+
+11:27:13 (saltd) OUT: "NX93210_gateway" pongsiri.c@AITS25A1PC0020  
+11:27:13 (saltd) OUT: "NX93210_solid_modeling" pongsiri.c@AITS25A1PC0020  
+11:27:13 (saltd) OUT: "NX93210_assemblies" pongsiri.c@AITS25A1PC0020  
+11:27:14 (saltd) IN: "NX93210_solid_modeling" teenarit.p@AH21ITPC0520  
+11:27:14 (saltd) OUT: "NCFOUND" churalak.m@AHTDIEPC102  
+11:27:14 (saltd) OUT: "NCFOUND_gateway" churalak.m@AHTDIEPC102  
+11:27:14 (saltd) OUT: "NX92300" churalak.m@AHTDIEPC102  
+11:27:14 (saltd) OUT: "NX92300_solid_modeling" churalak.m@AHTDIEPC102  
+11:27:14 (saltd) OUT: "tol_cavity_milling" churalak.m@AHTDIEPC102  
+11:27:14 (saltd) OUT: "CAM5X" teenarit.p@AH21ITPC0520  
+11:27:14 (saltd) OUT: "CAM5X_cam_base" teenarit.p@AH21ITPC0520  
+11:27:14 (saltd) OUT: "CAM5X_gateway" teenarit.p@AH21ITPC0520  
+11:27:14 (saltd) IN: "NX93210_gateway" teenarit.p@AH21ITPC0520  
+11:27:14 (saltd) IN: "NX93210" teenarit.p@AH21ITPC0520  
+11:27:20 (saltd) OUT: "prd_em_workplace_nt" Nutthapol.s@AITS25A1NB0390  
+11:27:20 (saltd) OUT: "prd_em_workplace_nt" Nutthapol.s@AITS25A1NB0390  
+11:27:21 (saltd) OUT: "prd_em_workplace_nt" Nutthapol.s@AITS25A1NB0390  
+11:27:21 (saltd) OUT: "MILLFOUND" Phairot.B@APBRDPC101  
+11:27:21 (saltd) OUT: "MILLFOUND_gateway" Phairot.B@APBRDPC101  
+11:27:21 (saltd) OUT: "MILLFOUND_geometric_tol" Phairot.B@APBRDPC101  
+11:27:21 (saltd) OUT: "MILLFOUND_solid_modeling" Phairot.B@APBRDPC101  
+11:27:23 (saltd) OUT: "MILLFOUND" Rajeevan.k@APBRDPC102  
+11:27:23 (saltd) OUT: "MILLFOUND_gateway" Rajeevan.k@APBRDPC102  
+11:27:26 (saltd) OUT: "NX91110" Nutthapol.s@AITS25A1NB0390  
+11:27:26 (saltd) OUT: "NX91110_gateway" Nutthapol.s@AITS25A1NB0390  
+11:27:39 (saltd) OUT: "prd_em_workplace_nt" supanut.r@AITS25A1NB0380  
+11:27:39 (saltd) OUT: "prd_mfg_base" supanut.r@AITS25A1NB0380  
+11:27:39 (saltd) OUT: "prd_em_workplace_nt" supanut.r@AITS25A1NB0380  
+11:27:40 (saltd) OUT: "NX93210" Ruengchai.S@AH23ITNB0430  
+11:27:40 (saltd) OUT: "NX93210_gateway" Ruengchai.S@AH23ITNB0430  
+11:27:44 (saltd) OUT: "NX93210" teenarit.p@AH21ITPC0520  
+11:27:44 (saltd) OUT: "NX93210_gateway" teenarit.p@AH21ITPC0520  
+11:27:44 (saltd) OUT: "NX93210_solid_modeling" teenarit.p@AH21ITPC0520  
+11:27:48 (saltd) OUT: "prd_em_workplace_nt" Nutthapol.s@AITS25A1NB0390  
+11:27:52 (saltd) OUT: "NX93210" nares.s@AITSGISPC106  
+11:27:52 (saltd) OUT: "NX93210_gateway" nares.s@AITSGISPC106  
+11:28:01 (saltd) OUT: "MILLFOUND" Somkiat.c@AITS25A1NB0110  
+11:28:01 (saltd) OUT: "MILLFOUND_gateway" Somkiat.c@AITS25A1NB0110  
+11:28:01 (saltd) OUT: "MILLFOUND_drafting" Somkiat.c@AITS25A1NB0110  
+11:28:22 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:24 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:27 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:27 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:27 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:28 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:28 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:29 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:35 (saltd) IN: "MILLFOUND_solid_modeling" Phairot.B@APBRDPC101  
+11:28:52 (saltd) OUT: "CAM5X_fix_axis_surf_mill" teenarit.p@AH21ITPC0520  
+11:28:58 (saltd) IN: "CAM5X_fix_axis_surf_mill" teenarit.p@AH21ITPC0520  
+11:29:16 (saltd) OUT: "MILLFOUND" Phairot.B@APBRDPC101  
+11:29:16 (saltd) OUT: "MILLFOUND_gateway" Phairot.B@APBRDPC101  
+11:29:16 (saltd) OUT: "MILLFOUND_geometric_tol" Phairot.B@APBRDPC101  
+11:29:16 (saltd) OUT: "MILLFOUND_solid_modeling" Phairot.B@APBRDPC101  
+11:31:43 (saltd) OUT: "NX93210_solid_modeling" nares.s@AITSGISPC106  
+11:31:59 (saltd) OUT: "NS5010" teenarit.p@AH21ITPC0520  
+11:31:59 (saltd) DENIED: "NS5010_solid_modeling" teenarit.p@AH21ITPC0520  "v2023.12"(License server system does not support this version of this feature. (-25,334))
+11:31:59 (saltd) IN: "NS5010" teenarit.p@AH21ITPC0520  (UNKNOWN)
+11:31:59 (saltd) OUT: "NX93210" teenarit.p@AH21ITPC0520  
+11:31:59 (saltd) OUT: "NX93210_solid_modeling" teenarit.p@AH21ITPC0520  
+11:31:59 (saltd) IN: "CAM5X_cam_base" teenarit.p@AH21ITPC0520  
+11:32:02 (saltd) OUT: "MILLFOUND" Wasin.w@APBTSPC103  
+11:32:02 (saltd) OUT: "MILLFOUND_gateway" Wasin.w@APBTSPC103  
+11:32:02 (saltd) OUT: "MILLFOUND_drafting" Wasin.w@APBTSPC103  
+11:32:47 (saltd) OUT: "NX93210_features_modeling" pongsiri.c@AITS25A1PC0020  
+11:32:56 (saltd) IN: "NX93210_features_modeling" pongsiri.c@AITS25A1PC0020  
+11:33:25 (saltd) OUT: "NX93210_step_ap214" pongsiri.c@AITS25A1PC0020  
+11:33:25 (saltd) IN: "NX93210_step_ap214" pongsiri.c@AITS25A1PC0020  
+11:33:31 (saltd) OUT: "NX91110_step_ap214" Nutthapol.s@AITS25A1NB0390  
+11:33:39 (saltd) OUT: "NX91110" Nutthapol.s@AITS25A1NB0390  
+11:33:39 (saltd) OUT: "NX91110_gateway" Nutthapol.s@AITS25A1NB0390  
+11:33:46 (saltd) OUT: "NX93210_step_ap214" pongsiri.c@AITS25A1PC0020  
+11:33:46 (saltd) IN: "NX93210_step_ap214" pongsiri.c@AITS25A1PC0020  
+11:34:31 (saltd) OUT: "NX91110_step_ap214" Nutthapol.s@AITS25A1NB0390  
+11:35:19 (saltd) OUT: "NX92300_nx_freeform_1" churalak.m@AHTDIEPC102  
+11:35:32 (saltd) IN: "NX93210_solid_modeling" teenarit.p@AH21ITPC0520  
+11:35:32 (saltd) IN: "NX93210" teenarit.p@AH21ITPC0520  
+11:35:33 (saltd) OUT: "CAM5X_cam_base" teenarit.p@AH21ITPC0520  
+11:35:38 (saltd) IN: "NX92300_nx_freeform_1" churalak.m@AHTDIEPC102  
+11:35:42 (saltd) OUT: "NX92300_nx_freeform_1" churalak.m@AHTDIEPC102  
+11:35:53 (saltd) IN: "NX92300_nx_freeform_1" churalak.m@AHTDIEPC102  
+
+
+
+
+
+
+
+
+11:28:22 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:24 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:27 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:27 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:27 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:28 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:28 (saltd) OUT: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  
+11:28:29 (saltd) IN: "CAM5X_planar_milling" teenarit.p@AH21ITPC0520  

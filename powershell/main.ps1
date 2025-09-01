@@ -1,3 +1,7 @@
+Set-Location -Path (Split-Path -Parent $MyInvocation.MyCommand.Path)
+
+. .\scriptblock.ps1
+. .\nx.ps1
 function  Credential-Object {
     param (
         [string]$user,

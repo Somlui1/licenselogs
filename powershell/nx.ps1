@@ -1,16 +1,3 @@
-
-$user = "aapico\itsupport"
-$pass = ConvertTo-SecureString "support" -AsPlainText -Force
-$cred = New-Object System.Management.Automation.PSCredential($user, $pass)
-# ดึง log ไฟล์จาก remote server
-$logfile = Invoke-Command -ComputerName 10.10.10.195 -Credential $cred -ScriptBlock {
-    $path = Join-Path "C:\ProgramData\Siemens" "License Server\saltd.log"
-    $res = Get-Content $path -ErrorAction Stop
-    return $res
-}
-
-
-# ตัวแปรเก็บข้อมูล session
 $sessions = @()
 $outEntries = @{}
 $currentDate = $null
@@ -83,6 +70,3 @@ foreach ($line in $lines) {
         }
     }
 }
-
-$sessions | Format-Table -AutoSize
-Write-Host "Exported nx to $excelPath"

@@ -27,7 +27,7 @@ export default defineConfig({
   reporter: [['html',{open: 'never'}]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    headless: true, // Run tests in headless mode
+    headless: false, // Run tests in headless mode
      screenshot: 'off',
     // ปิดการเก็บวิดีโอ
     video: 'off',
