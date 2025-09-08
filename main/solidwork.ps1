@@ -1,30 +1,6 @@
-$user = "aapico\itsupport"
-$pass = ConvertTo-SecureString "support" -AsPlainText -Force
-$cred = New-Object System.Management.Automation.PSCredential($user, $pass)
-
-
-# 1️⃣ ดึงไฟล์จาก Remote Server
-$logfile = Invoke-Command -ComputerName '10.10.22.228' -Credential $cred -ScriptBlock {
-    $logDir = "C:\Program Files (x86)\SOLIDWORKS SolidNetWork License Manager"
-    $logFiles = Get-ChildItem -Path $logDir -Filter "lmgrd.log"  -File -Recurse
-    $combined = @()
-
-    foreach ($file in $logFiles) {
-        try {
-            $lines = Get-Content $file.FullName -Encoding utf8  -ErrorAction Stop
-            $combined += $lines
-        } catch {
-            Write-Warning "Failed to read file: $($file.FullName)"
-        }
-    }
-    return $combined
-}
-
-if (-not $logfile) {
-    Write-Error "No log data retrieved."
-    return
-}
-
+# Requires -Version 5.1 or later
+# Requires ImportExcel module: Install-Module -Name ImportExcel
+$logFile = "sw_log.txt"
 # Regex patterns
 $timestampPattern = 'TIMESTAMP (\d{1,2}/\d{1,2}/\d{4})'
 $entryPattern = '(\d{1,2}:\d{2}:\d{2}) \(SW_D\) (OUT|IN|DENIED|UNSUPPORTED): "([^"]+)" ([\w.]+)@([\w\d]+)'
@@ -32,7 +8,7 @@ $entryPattern = '(\d{1,2}:\d{2}:\d{2}) \(SW_D\) (OUT|IN|DENIED|UNSUPPORTED): "([
 $data = @()
 $currentDate = $null
 
-$logFile | ForEach-Object {
+Get-Content $logFile -Encoding utf8 | ForEach-Object {
     $line = $_
 
     # Check if line contains timestamp
@@ -91,16 +67,15 @@ foreach ($row in $data) {
                 end_time = $end.datetime.ToString("HH:mm:ss")
                 duration_minutes = [math]::Round($durationSec / 60, 2)
                 feature = $start.feature
-                user = $start.user
+                username = $start.user
                 computer = $start.computer
             }
         }
     }
 }
 
-#$sessions
 # Export to Excel (requires ImportExcel module)
-#$sessions | Export-Excel -Path "sw_log_sessions.xlsx" -AutoSize -WorksheetName "Sessions"
-#Write-Host "Session summary exported to sw_log_sessions.xlsx"
+$sessions | Export-Excel -Path "sw_log_sessions.xlsx" -AutoSize -WorksheetName "Sessions"
+Write-Host "Session summary exported to sw_log_sessions.xlsx"
 # Show first 5 sessions
-#$sessions | Select-Object -First 5 | Format-Table -AutoSize
+$sessions | Select-Object -First 5 | Format-Table -AutoSize

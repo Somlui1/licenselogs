@@ -1,0 +1,166 @@
+$username = "aapico\itsupport"
+$pass = ConvertTo-SecureString "support" -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential($username, $pass)
+# ดึง log ไฟล์จาก remote server
+$logfile = Invoke-Command -ComputerName 'AITS25A1PC0040.aapico.com' -Credential $cred -ScriptBlock {
+    $logDir = "C:\Users\ahroot\Documents"
+    # Find all files matching pattern
+    $logFiles = Get-ChildItem -Path $logDir -Filter "Logfile.rlog.2025.09.*" -File -Recurse
+    # Initialize array for content
+    $combined = @()
+
+    foreach ($file in $logFiles) {
+        try {
+            $lines = Get-Content $file.FullName -ErrorAction Stop
+            $combined += $lines
+        } catch {
+            Write-Warning "Failed to read file: $($file.FullName)"
+        }
+    }
+    # Return combined content to the caller
+    return $combined
+}
+# Check if log was retrieved
+if (-not $logfile) {
+    Write-Error "No log data retrieved."
+    return
+}
+
+
+$logfile | ForEach-Object {
+    $line = $_.Trim()
+    if (-not $line) { return }
+
+    # แบ่งบรรทัดเป็นช่อง ๆ ตามช่องว่าง
+    $parts = -split $line -ne ''
+
+    if ($parts.Count -lt 10) { return }
+
+    $action = $parts[0].ToUpper()
+
+    if ($action -eq 'OUT') {
+        $module = $parts[1]
+        $version = $parts[2]
+        $hostname = $parts[5]
+        $username = $parts[4]
+        $license_id = $parts[10]
+        $date = $parts[-2]  # MM/DD
+        $time = $parts[-1]  # HH:MM:SS
+        $datetimeStr = "2025-$date $time"
+
+        # แปลงเป็น DateTime
+        $startDt = [datetime]::ParseExact($datetimeStr, 'yyyy-M/dd HH:mm:ss', $null)
+
+        # เก็บข้อมูล OUT
+        $outEntries[$license_id] = [PSCustomObject]@{
+            module        = $module
+            version       = $version
+            host          = $hostname
+            username          = $username
+            start_datetime= $startDt
+            start_date    = $startDt.ToString('yyyy-MM-dd')
+            start_time    = $time
+            start_hours   = $time.Substring(0,2)
+            start_action  = $action
+        }
+    }
+    elseif ($action -eq 'IN') {
+        $license_id = $parts[-3]
+        $date = $parts[-2]
+        $time = $parts[-1]
+        $datetimeStr = "2025-$date $time"
+
+        $endDt = [datetime]::ParseExact($datetimeStr, 'yyyy-M/dd HH:mm:ss', $null)
+
+        if ($outEntries.ContainsKey($license_id)) {
+            $session = $outEntries[$license_id]
+            $outEntries.Remove($license_id)
+
+            $session | Add-Member -NotePropertyName end_datetime -NotePropertyValue $endDt
+            $session | Add-Member -NotePropertyName end_date -NotePropertyValue $endDt.ToString('yyyy-MM-dd')
+            $session | Add-Member -NotePropertyName end_time -NotePropertyValue $time
+            $session | Add-Member -NotePropertyName end_hours -NotePropertyValue $time.Substring(0,2)
+            $session | Add-Member -NotePropertyName end_action -NotePropertyValue $action
+
+            $sessions += $session
+        }
+    }
+}
+
+# คำนวณ duration เป็นนาที
+$sessions | ForEach-Object {
+    $duration = ($_.end_datetime - $_.start_datetime).TotalMinutes
+    $_ | Add-Member -NotePropertyName duration_minutes -NotePropertyValue $duration
+}
+
+# จัดเรียงคอลัมน์ตามต้องการ
+
+
+Write-Host -ForegroundColor blue  $sessions.count 
+
+function Send-JsonPayload {
+    param (
+        [Parameter(Mandatory)]
+        [string]$Url,
+
+        [Parameter(Mandatory)]
+        [hashtable]$Payload,
+
+        [Parameter(Mandatory)]
+        [int]$depth,
+
+        [string]$ContentType = "application/json"
+    )
+
+    try {
+        # แปลง Payload เป็น JSON string
+        $jsonBody = $Payload | ConvertTo-Json -Depth $depth -Compress
+
+        Write-Host "Sending JSON to $Url..."
+        Write-Host $jsonBody
+
+        # ใช้ Invoke-WebRequest เพื่อให้ได้ Response object ที่มี StatusCode
+        $response = Invoke-WebRequest -Uri $Url -Method Post -Body $jsonBody -ContentType $ContentType -ErrorAction Stop
+
+        # คืนค่า StatusCode (ตัวเลข เช่น 200)
+        return $response.StatusCode
+    }
+    catch {
+        if ($_.Exception.Response -ne $null) {
+            return $_.Exception.Response.StatusCode.Value__
+        } else {
+            Write-Error "Error sending data: $_"
+            return -1  # ใช้ -1 เป็นตัวบ่งชี้ว่าไม่มี response code (เช่น network error)
+        }
+    }
+}
+
+function Chunked {
+    param (
+        [Parameter(Mandatory=$true)]
+        [array]$Iterable,
+
+        [Parameter(Mandatory=$true)]
+        [int]$Size
+    )
+
+    for ($i = 0; $i -lt $Iterable.Count; $i += $Size) {
+        $chunk = $Iterable[$i..([Math]::Min($i + $Size - 1, $Iterable.Count - 1))]
+        ,$chunk   # comma operator ทำให้ return เป็น array เดียว ไม่ flatten
+    }
+}
+
+$chunks = Chunked -Iterable $sessions -Size 800
+foreach ($chunk in $chunks) {
+    $payload = @{
+        ip = 0
+        product = "autoform"
+        data = @($chunk)
+    }
+    # ระบุ URL API
+    $targetUrl = "http://localhost/testing/"
+    # เรียก function ส่ง JSON
+    $response = Send-JsonPayload -Url $targetUrl -Payload $payload -depth 10
+    Write-Host "Response from server: $response"
+}
+Start-Sleep -Seconds 2

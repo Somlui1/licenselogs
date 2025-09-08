@@ -1,82 +1,57 @@
-# ต้องติดตั้ง ImportExcel module ก่อน
-# Install-Module -Name ImportExcel -Scope CurrentUser
+# Requires ImportExcel module: Install-Module ImportExcel
+$user = "aapico\itsupport"
+$pass = ConvertTo-SecureString "support" -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential($user, $pass)
+# 1️⃣ ดึงไฟล์จาก Remote Server
+$logfile = Invoke-Command -ComputerName 'ah23itpc0540.aapico.com' -Credential $cred -ScriptBlock {
+    $logDir = "C:\ProgramData\DassaultSystemes\LicenseServer\LogFiles"
+    $logFiles = Get-ChildItem -Path $logDir -Filter "LicenseServer2025*" -File -Recurse
+    $combined = @()
 
-$log_file = "license_log.txt"
-$sessions = @()
-$out_entries = @{}
-$current_date = $null
-$last_datetime = $null
-
-function Parse-DateFromStartDate($line) {
-    if ($line -match '\d{2}:\d{2}:\d{2} \(lmgrd\) \(@lmgrd-SLOG@\) Start-Date: (.+)') {
-        $raw_date = $matches[1].Trim() -replace " SE Asia",""
-        return [datetime]::ParseExact($raw_date, "ddd MMM dd yyyy HH:mm:ss", $null).Date
+    foreach ($file in $logFiles) {
+        try {
+            $lines = Get-Content $file.FullName -Encoding UTF8  -ErrorAction Stop
+            $combined += $lines
+        } catch {
+            Write-Warning "Failed to read file: $($file.FullName)"
+        }
     }
-    return $null
+    return $combined
 }
-
-# อ่าน log file
-$lines = Get-Content $log_file -Encoding UTF8
-
-foreach ($line in $lines) {
-    # อัปเดตวันที่เมื่อเจอ Start-Date ใหม่
-    $new_date = Parse-DateFromStartDate $line
-    if ($new_date) {
-        $current_date = $new_date
-        continue
-    }
-
-    # จับ log OUT / IN
-    if ($line -match '^(\d{2}:\d{2}:\d{2}) \(saltd\) (OUT|IN): "([^"]+)" ([^@]+)@(.+)$' -and $current_date) {
-        $time_str = $matches[1]
-        $action = $matches[2]
-        $module = $matches[3]
-        $user = $matches[4]
-        $host = $matches[5]
-
-        $time_obj = [datetime]::ParseExact($time_str, "HH:mm:ss", $null).TimeOfDay
-
-        # ตรวจสอบข้ามวัน
-        if ($last_datetime -and $time_obj -lt $last_datetime.TimeOfDay) {
-            $current_date = $current_date.AddDays(1)
+if (-not $logfile) {
+    Write-Error "No log data retrieved."
+    return
+}
+#$logFile = "license_denied_log.txt"
+$data = @()
+# Regex pattern for License Denied lines
+$pattern = '(?<datetime>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}:\d{3}) W LICENSESERV (?<feature>\S+) not granted, (?<reason>.*) \( from client (?<client>.*?) \((.*?)\)/.*?\|(?<user>[^|]+)\|(?<user_full>[^|]+)\|(?<license>[^|]+)\|(?<path>.*?) \)'
+# Read file line by line
+$logfile | ForEach-Object {
+    if ($_ -match $pattern) {
+        try {
+            $dt = [datetime]::ParseExact($matches['datetime'], 'yyyy/MM/dd HH:mm:ss:fff', $null)
+        } catch {
+            Write-Warning "Invalid datetime format in line: $_"
+            return
         }
 
-        $dt = [datetime]::ParseExact(($current_date.ToString("yyyy-MM-dd") + " " + $time_str), "yyyy-MM-dd HH:mm:ss", $null)
-        $last_datetime = $dt
-
-        $key = "$user|$host|$module"
-
-        if ($action -eq "OUT") {
-            $out_entries[$key] = @{
-                start_datetime = $dt
-                start_date = $dt.ToString("yyyy-MM-dd")
-                start_time = $dt.ToString("HH:mm:ss")
-                user = $user
-                host = $host
-                module = $module
-            }
-        } elseif ($action -eq "IN") {
-            if ($out_entries.ContainsKey($key)) {
-                $start = $out_entries[$key]
-                $out_entries.Remove($key)
-                $duration_minutes = [math]::Round(($dt - $start.start_datetime).TotalMinutes, 2)
-                $sessions += [PSCustomObject]@{
-                    start_date = $start.start_date
-                    start_time = $start.start_time
-                    end_date = $dt.ToString("yyyy-MM-dd")
-                    end_time = $dt.ToString("HH:mm:ss")
-                    duration_minutes = $duration_minutes
-                    host = $host
-                    module = $module
-                    user = $user
-                }
-            }
+        $data += [PSCustomObject]@{
+            Date    = $dt.Date
+            Time    = $dt.ToString("HH:mm:ss.fff")
+            Feature = $matches['feature']
+            Reason  = $matches['reason']
+            User    = $matches['user']
+            Client  = $matches['client']
+            Path    = $matches['path']
         }
     }
 }
 
-# ส่งออก Excel
-$sessions | Export-Excel -Path "license_sessions_multiday.xlsx" -AutoSize
+# Export to Excel
+#$data | Export-Excel -Path "license_denied_report.xlsx" -AutoSize -WorksheetName "DeniedLicenses"
 
-# แสดงผล
-$sessions | Format-Table -AutoSize
+#Write-Output "บันทึกข้อมูลเรียบร้อยใน license_denied_report.xlsx"
+# Export to Excel (requires ImportExcel module)
+#$data | Export-Excel -Path "license_denied_report.xlsx" -AutoSize -WorksheetName "Report"
+#Write-Output "บันทึกข้อมูลเรียบร้อยใน license_denied_report.xlsx"

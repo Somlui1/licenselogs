@@ -67,3 +67,6 @@ df_sessions = df_sessions[columns]
 # ส่งออก Excel
 df_sessions.to_excel("license_sessions_with_details.xlsx", index=False)
 print("Exported to license_sessions_with_details.xlsx")
+
+
+

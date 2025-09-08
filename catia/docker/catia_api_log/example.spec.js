@@ -1,3 +1,6 @@
+import clipboardy from 'clipboardy';
+
+
 function removePseudoHeaders(headers) {
   const cleanHeaders = {};
   for (const key in headers) {
@@ -38,6 +41,9 @@ import { test, expect } from '@playwright/test';
 const path = require('path');
 const process = require('process');
 process.chdir(__dirname);
+
+const util = require('util');
+
 test('AA capture getLogs API call', async ({ page }) => {
   // ✅ สร้าง Promise สำหรับรอ request ที่ action = "getLogs"
 
@@ -115,7 +121,10 @@ matchedRequest.body.parameters.numberOfRowsToReturn = 999999; // ลบเพื
 } catch (error) {
   console.error('Error fetching logs:', error); 
 }
-  await saveToMongo(result,'logs','AA');
+  // await saveToMongo(result,'logs','AA');
+  // console.log(util.inspect(result, {showHidden: false, depth: null, maxArrayLength: null}));;
+  await clipboardy.write(JSON.stringify(result, null, 2));
+  console.log('Done to set massage to Clipboard');  
 });
 
 test('AHA capture getLogs API call', async ({ page }) => {
@@ -193,7 +202,11 @@ result = await response.json();
   } catch (error) {
   console.error('Error fetching logs:', error); 
 }
-  await saveToMongo(result,'logs','AHA');
+  //await saveToMongo(result,'logs','AHA');
+  //console.log(util.inspect(result, {showHidden: false, depth: null, maxArrayLength: null}));
+  await clipboardy.write(JSON.stringify(result, null, 2));
+  console.log('Done to set massage to Clipboard');
+
 });
 
 
