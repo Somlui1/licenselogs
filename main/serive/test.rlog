@@ -1,0 +1,12 @@
+OUT af_company_string 5.0 1 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 2 0 e9 e9 b838 "" "" "" 09/04 19:48:45
+OUT af_autoform_seat_nu 5.0 9 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 2 0 4f3 4f3 b838 "" "" "" 09/04 19:49:11
+OUT af_explorer_addon_nu 5.0 14 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 1 0 6e 6e b838 "" "" "" 09/04 19:49:11
+OUT af_stampingadviser_addon_nu 5.0 16 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 1 0 5bc 5bc b838 "" "" "" 09/04 19:49:11
+OUT af_diedesigner_addon_nu 5.0 12 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 2 0 475 475 b838 "" "" "" 09/04 19:49:11
+OUT af_compensator_addon_nu 5.0 17 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 1 0 386 386 b838 "" "" "" 09/04 19:49:11
+IN 1 af_company_string 5.0 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 1 0 e9 09/04 19:49:43
+IN 1 af_autoform_seat_nu 5.0 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 1 0 4f3 09/04 19:49:43
+IN 1 af_explorer_addon_nu 5.0 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 0 0 6e 09/04 19:49:43
+IN 1 af_stampingadviser_addon_nu 5.0 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 0 0 5bc 09/04 19:49:43
+IN 1 af_diedesigner_addon_nu 5.0 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 1 0 475 09/04 19:49:43
+IN 1 af_compensator_addon_nu 5.0 apichart.c aits25a1nb0300 "sVNk5TR9H9Vv2t-QBBl7CXejzuVREbUb" 1 0 0 386 09/04 19:49:43
