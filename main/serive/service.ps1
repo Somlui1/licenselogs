@@ -145,7 +145,7 @@ try {
                 username         = $username
                 version          = $version
                 keyword          = $keyword
-                hash             = $hash
+                hash             = $hash.Trim('"')
                 hash_id          = "$($hash.Trim('"'))-$($license_id)-$(($start_dt).ToString('MMyy'))"
                 license_id       = $license_id
             }
@@ -179,7 +179,7 @@ try {
             username       = $username
             start_action   = $action
             start_datetime = $start_dt
-            hash           = $hash
+            hash             = $hash.Trim('"')
             license_id     = $license_id
             datetime       = $start_dt.ToString("yyyy-MM/dd HH:mm:ss")
             keyword        = $keyword
@@ -215,7 +215,7 @@ try {
                 username         = $entry.username
                 version          = $entry.version
                 keyword          = $keyword
-                hash             = $hash
+                hash             = $hash.Trim('"')
                 hash_id          = "$($entry.hash.Trim('"'))-$($license_id)-$(($entry.start_datetime).ToString('MMyy'))"
                 license_id       = $entry.license_id
             }
@@ -236,7 +236,7 @@ try {
                 host             = $entry.host
                 module           = $entry.module
                 username         = $entry.username
-                hash             = $hash
+                hash             = $hash.Trim('"')
                 keyword          = $keyword
                 version          = $entry.version
                 hash_id          = "$($entry.hash.Trim('"'))-$($license_id)-$(($session_start_dt).ToString('MMyy'))"
